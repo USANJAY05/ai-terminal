@@ -5,7 +5,7 @@ function explain() {
 
     if [[ -f "$input" ]]; then
         file_content=$(cat "$input")
-        explanation=$(ollama run "$MODEL" "Explain the following content in simple terms: $file_content")
+        explanation=$(ollama run "$MODEL" "Explain the following content in simple terms withe each line of the content: $file_content")
         echo -e "\nExplanation of file $input:\n$explanation\n"
     else
         explanation=$(ollama run "$MODEL" "Explain the following question in simple terms: $input")
