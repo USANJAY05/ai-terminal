@@ -1,0 +1,10 @@
+name: CI
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send ntfy notification
+        run: curl  -d "Code pushed to github" http://http://52.66.251.163/git
