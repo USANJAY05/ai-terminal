@@ -6,5 +6,6 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send notification
-        run: curl -d "Code pushed to GitHub" http://52.66.251.163/git
+      - name: Send notification with username
+        run: |
+          curl -d "Code pushed by $GITHUB_ACTOR" http://52.66.251.163/git
