@@ -8,4 +8,4 @@ jobs:
     steps:
       - name: Send notification with username
         run: |
-          curl -d "Code pushed by $GITHUB_ACTOR" http://52.66.251.163/git
+          curl -d "Code pushed by $GITHUB_ACTOR" http://15.206.205.221/git
