@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 import subprocess
 from rich.console import Console
 
@@ -13,11 +14,11 @@ def is_command_safe(command: str) -> bool:
 
 def run_command(command: str, cwd: str):
     if not command.strip():
-        console.print("⚠️ No valid command generated.")
+        console.print(" No valid command generated.")
         return cwd
 
     if not is_command_safe(command):
-        console.print(f"❌ Command blocked for safety: {command}")
+        console.print(f" Command blocked for safety: {command}")
         return cwd
 
     if command.startswith("cd"):
@@ -27,7 +28,7 @@ def run_command(command: str, cwd: str):
             console.print(f"📂 Changed directory to: {new_path}")
             return new_path
         else:
-            console.print(f"❌ Directory not found: {new_path}")
+            console.print(f" Directory not found: {new_path}")
             return cwd
 
     try:
@@ -36,21 +37,23 @@ def run_command(command: str, cwd: str):
         if result.stderr:
             console.print(f"[bold red]Error:[/bold red]\n{result.stderr}")
     except subprocess.CalledProcessError as e:
-        console.print(f"❌ Error executing command: {e}")
+        console.print(f" Error executing command: {e}")
 
     return cwd
 
-def save_chat_history(chat_history, filename="chat_history.md"):
-    if not chat_history:
-        console.print("[yellow]⚠️ No chat history to save.[/yellow]")
-        return
+def save_chat_history(messages, filename="chat_history.txt"):
+    """Save chat history to a file."""
+    
+    # Optional: Automatically create a 'chats' folder
+    os.makedirs("chats", exist_ok=True)
 
-    try:
-        with open(filename, "w", encoding="utf-8") as f:
-            f.write("# 🤖 Chat History\n\n")
-            for entry in chat_history:
-                role, message = entry.split(":", 1)
-                f.write(f"**{role.strip()}**: {message.strip()}\n\n")
-        console.print(f"[bold cyan]💾 Chat history saved to:[/bold cyan] {filename}")
-    except Exception as e:
-        console.print(f"[bold red]❌ Error saving chat history:[/bold red] {e}")
+    #  If default filename, add timestamp to avoid overwriting
+    if filename == "chat_history.txt":
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"chats/chat_{timestamp}.txt"
+    else:
+        filename = f"chats/{filename}" if not filename.startswith("chats/") else filename
+
+    with open(filename, "a", encoding="utf-8") as f:
+        f.write("\n".join(messages))
+        f.write("\n" + "=" * 50 + "\n")  # separator for sessions

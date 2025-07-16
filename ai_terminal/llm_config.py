@@ -8,16 +8,16 @@ load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 
 if not api_key:
-    raise ValueError("❌ GOOGLE_API_KEY not found! Please set it in the .env file.")
+    raise ValueError("GOOGLE_API_KEY not found! Please set it in the .env file.")
 
-# ✅ Initialize LLM
+# Initialize LLM
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.0-flash",
     temperature=0,
     google_api_key=api_key
 )
 
-# ✅ Prompt Templates
+# Prompt Templates
 command_prompt = PromptTemplate(
     input_variables=["question"],
     template="""

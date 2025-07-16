@@ -27,4 +27,4 @@ def terminal():
             for cmd in commands:
                 current_dir = run_command(cmd, current_dir)
         except Exception as e:
-            console.print(f"[bold red]❌ LLM Error:[/bold red] {e}")
+            console.print(f"[bold red] LLM Error:[/bold red] {e}")
