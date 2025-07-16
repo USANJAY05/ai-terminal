@@ -19,7 +19,7 @@ echo "Upgrading pip..."
 pip install --upgrade pip
 
 # 4. Install in editable mode
-echo "📦 Installing ai-terminal in editable mode..."
+echo "Installing ai-terminal in editable mode..."
 pip install -e .
 
 echo "Installation complete!"
